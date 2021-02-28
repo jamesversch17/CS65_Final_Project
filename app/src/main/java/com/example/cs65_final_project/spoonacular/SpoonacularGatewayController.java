@@ -13,15 +13,24 @@ import java.util.stream.Stream;
  */
 public class SpoonacularGatewayController {
 
-    private SpoonacularClient mClient;
+    private final SpoonacularClient mClient;
 
     public SpoonacularGatewayController() {
         this.mClient = new SpoonacularClient();
     }
 
     public List<Recipe> getRecipes(List<String> ingredients,
-                            final int numOfResults) throws SpoonacularException {
+                                   int numOfResults) throws SpoonacularException {
         return toRecipes(mClient.getRecipes(ingredients, numOfResults));
+    }
+
+    public List<Ingredient> getIngredients(String query,
+                                           int numOfResults) throws SpoonacularException {
+        return toIngredients(mClient.getIngredients(query, numOfResults));
+    }
+
+    private List<Ingredient> toIngredients(List<SpoonacularIngredient> ingredients) {
+        return ingredients.stream().map(this::toIngredient).collect(Collectors.toList());
     }
 
     private List<Recipe> toRecipes(List<SpoonacularRecipe> spoonacularRecipes) {
@@ -38,7 +47,13 @@ public class SpoonacularGatewayController {
                 30);
     }
 
+    // TODO: Time?
     private Ingredient toIngredient(SpoonacularRecipeIngredient ingredient) {
         return new Ingredient(ingredient.getOriginal(), 1.0f);
+    }
+
+    // TODO: Time?
+    private Ingredient toIngredient(SpoonacularIngredient ingredient) {
+        return new Ingredient(ingredient.getName(), 1.0f);
     }
 }

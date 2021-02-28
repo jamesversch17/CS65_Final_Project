@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -18,11 +17,9 @@ import com.example.cs65_final_project.R;
 import com.example.cs65_final_project.Recipe;
 import com.example.cs65_final_project.activities.RecipeViewActivity;
 import com.example.cs65_final_project.adapters.SuggestedRecipeAdapter;
-import com.example.cs65_final_project.exceptions.SpoonacularException;
 import com.example.cs65_final_project.spoonacular.SpoonacularGatewayController;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SearchFragment extends Fragment implements AdapterView.OnItemClickListener,
@@ -76,16 +73,16 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
     public boolean onQueryTextChange(String newText) {
         mSearchQueryHandler.removeCallbacksAndMessages(null);
         mSearchQueryHandler.postDelayed((Runnable) () -> {
-            try {
-                List<Recipe> recipes =
-                        mSpoonacularGatewayController.getRecipes(Arrays.asList("apple","sugar"), 10);
-
-                getActivity().runOnUiThread(() -> {
-                    mSuggestedRecipeAdapter.updateRecipes(recipes);
-                });
-            } catch (SpoonacularException e) {
-                Toast.makeText(getActivity(), "Faild to get recipes!", Toast.LENGTH_LONG).show();
-            }
+//            try {
+//                List<Recipe> recipes =
+//                        mSpoonacularGatewayController.getRecipes(Arrays.asList("apple","sugar"), 10);
+//
+//                getActivity().runOnUiThread(() -> {
+//                    mSuggestedRecipeAdapter.updateRecipes(recipes);
+//                });
+//            } catch (SpoonacularException e) {
+//                Toast.makeText(getActivity(), "Faild to get recipes!", Toast.LENGTH_LONG).show();
+//            }
         }, 500);
 
         return false;
